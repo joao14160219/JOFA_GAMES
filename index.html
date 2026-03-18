@@ -1558,13 +1558,6 @@ window.addEventListener('load', function() {
   function parseGLB(buffer, onLoad) {
   var view = new DataView(buffer);
   var magic = String.fromCharCode(view.getUint8(0),view.getUint8(1),view.getUint8(2),view.getUint8(3));
-
-    
-  function parseGLB(buffer, onLoad) {
-  var view = new DataView(buffer);
-  var magic = String.fromCharCode(view.getUint8(0),view.getUint8(1),view.getUint8(2),view.getUint8(3));
-  console.log('Magic:', magic, '| URL tentada:', arguments);
-    
   if (magic !== 'glTF') { console.error('Not a GLB'); return; }
 
   var offset=12, jsonData=null, binBuffer=null;
@@ -1670,93 +1663,88 @@ window.addEventListener('load', function() {
 
   // ── Create one Three.js scene per canvas ─────────────────────────────
   var CHARS = [
-  { canvasId:'canvas1', modelUrl:'eu.glb'    },
-  { canvasId:'canvas2', modelUrl:'palma.glb' }
-];
+    { canvasId:'canvas1', modelUrl:'/eu.glb'    },
+    { canvasId:'canvas2', modelUrl:'/palma.glb' }
+  ];
 
-CHARS.forEach(function(cfg) {
-  var canvas = document.getElementById(cfg.canvasId);
-  if (!canvas) return;
+  CHARS.forEach(function(cfg) {
+    var canvas = document.getElementById(cfg.canvasId);
+    if (!canvas) return;
 
-  var renderer = new THREE.WebGLRenderer({canvas:canvas,alpha:true,antialias:true});
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
-  renderer.shadowMap.enabled = true;
+    var renderer = new THREE.WebGLRenderer({canvas:canvas,alpha:true,antialias:true});
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+    renderer.shadowMap.enabled = true;
 
-  var scene  = new THREE.Scene();
-  var camera = new THREE.PerspectiveCamera(34,1,0.1,100);
-  camera.position.set(0, 1.0, 6.0);
-  camera.lookAt(0, 0.8, 0);
+    var scene  = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(34,1,0.1,100);
+    camera.position.set(0, 1.0, 6.0);
+    camera.lookAt(0, 0.8, 0);
 
-  scene.add(new THREE.AmbientLight(0xffffff, 0.4));
-  var dl = new THREE.DirectionalLight(0xffffff, 1.2);
-  dl.position.set(2, 5, 4);
-  scene.add(dl);
-  var dl2 = new THREE.DirectionalLight(0xffffff, 0.6);
-  dl2.position.set(-2, 3, -2);
-  scene.add(dl2);
+    scene.add(new THREE.AmbientLight(0xffffff, 0.4));
+    var dl = new THREE.DirectionalLight(0xffffff, 1.2);
+    dl.position.set(2, 5, 4);
+    scene.add(dl);
+    var dl2 = new THREE.DirectionalLight(0xffffff, 0.6);
+    dl2.position.set(-2, 3, -2);
+    scene.add(dl2);
 
-  /* ── drag/touch ── */
-  var isDragging=false, prevX=0, prevY=0, rotY=0, rotX=0, targetY=0, targetX=0;
-  canvas.addEventListener('mousedown', function(e){ isDragging=true; prevX=e.clientX; prevY=e.clientY; });
-  window.addEventListener('mousemove', function(e){
-    if(!isDragging) return;
-    targetY+=(e.clientX-prevX)*0.012; targetX+=(e.clientY-prevY)*0.008;
-    targetX=Math.max(-0.6,Math.min(0.6,targetX)); prevX=e.clientX; prevY=e.clientY;
-  });
-  window.addEventListener('mouseup', function(){ isDragging=false; });
-  canvas.addEventListener('touchstart',function(e){e.preventDefault();isDragging=true;prevX=e.touches[0].clientX;prevY=e.touches[0].clientY;},{passive:false});
-  canvas.addEventListener('touchmove', function(e){e.preventDefault();
-    targetY+=(e.touches[0].clientX-prevX)*0.012; targetX+=(e.touches[0].clientY-prevY)*0.008;
-    targetX=Math.max(-0.6,Math.min(0.6,targetX)); prevX=e.touches[0].clientX; prevY=e.touches[0].clientY;
-  },{passive:false});
-  canvas.addEventListener('touchend', function(){ isDragging=false; });
+    var isDragging=false, prevX=0, prevY=0, rotY=0, rotX=0, targetY=0, targetX=0, t=0;
 
-  loadGLB(cfg.modelUrl, function(gltf) {
-  var model = gltf.scene;
+    canvas.addEventListener('mousedown', function(e){ isDragging=true; prevX=e.clientX; prevY=e.clientY; });
+    window.addEventListener('mousemove', function(e){
+      if(!isDragging) return;
+      targetY+=(e.clientX-prevX)*0.012; targetX+=(e.clientY-prevY)*0.008;
+      targetX=Math.max(-0.6,Math.min(0.6,targetX)); prevX=e.clientX; prevY=e.clientY;
+    });
+    window.addEventListener('mouseup', function(){ isDragging=false; });
+    canvas.addEventListener('touchstart',function(e){e.preventDefault();isDragging=true;prevX=e.touches[0].clientX;prevY=e.touches[0].clientY;},{passive:false});
+    canvas.addEventListener('touchmove',function(e){e.preventDefault();
+      targetY+=(e.touches[0].clientX-prevX)*0.012; targetX+=(e.touches[0].clientY-prevY)*0.008;
+      targetX=Math.max(-0.6,Math.min(0.6,targetX)); prevX=e.touches[0].clientX; prevY=e.touches[0].clientY;
+    },{passive:false});
+    canvas.addEventListener('touchend', function(){ isDragging=false; });
 
-  var box = new THREE.Box3().setFromObject(model);
-  var size = box.getSize(new THREE.Vector3());
-  var sc = 2.2 / Math.max(size.x, size.y, size.z);
-  model.scale.setScalar(sc);
+    loadGLB(cfg.modelUrl, function(gltf) {
+      var model = gltf.scene;
 
-  box.setFromObject(model);
-  var center = box.getCenter(new THREE.Vector3());
-  model.position.set(-center.x, -box.min.y, -center.z);
+      var box = new THREE.Box3().setFromObject(model);
+      var size = box.getSize(new THREE.Vector3());
+      var sc = 2.2 / Math.max(size.x, size.y, size.z);
+      model.scale.setScalar(sc);
+      box.setFromObject(model);
+      var center = box.getCenter(new THREE.Vector3());
+      model.position.set(-center.x, -box.min.y, -center.z);
+      scene.add(model);
 
-  scene.add(model);
+      rotY=0; targetY=0; rotX=0; targetX=0; t=0;
 
-  /* zera estado do drag — personagem começa de frente */
-  rotY = 0; targetY = 0;
-  rotX = 0; targetX = 0;
-  t = 0;
+      function resize() {
+        var w=canvas.parentElement.clientWidth||300;
+        var h=canvas.parentElement.clientHeight||500;
+        renderer.setSize(w,h,false);
+        camera.aspect=w/h;
+        camera.updateProjectionMatrix();
+      }
+      resize();
+      window.addEventListener('resize', resize);
 
-  function resize() {
-    var w = canvas.parentElement.clientWidth || 300;
-    var h = canvas.parentElement.clientHeight || 500;
-    renderer.setSize(w, h, false);
-    camera.aspect = w / h;
-    camera.updateProjectionMatrix();
-  }
-  resize();
-  window.addEventListener('resize', resize);
+      var offsetY = -Math.PI / 2;
 
-  var offsetY = -Math.PI / 2; /* ajusta aqui: 0, Math.PI/2, Math.PI, -Math.PI/2 */
+      (function animate() {
+        requestAnimationFrame(animate);
+        t += 0.016;
+        rotY += (targetY - rotY) * 0.08;
+        rotX += (targetX - rotX) * 0.08;
+        if (!isDragging) targetY += Math.sin(t * 0.8) * 0.003;
+        model.rotation.y = offsetY + rotY;
+        model.rotation.x = rotX;
+        model.position.y = Math.abs(Math.sin(t * 1.1)) * 0.05;
+        renderer.render(scene, camera);
+      })();
 
-  (function animate() {
-    requestAnimationFrame(animate);
-    t += 0.016;
-    rotY += (targetY - rotY) * 0.08;
-    rotX += (targetX - rotX) * 0.08;
-    if (!isDragging) targetY += Math.sin(t * 0.8) * 0.003;
-    model.rotation.y = offsetY + rotY;
-    model.rotation.x = rotX;
-    model.position.y = Math.abs(Math.sin(t * 1.1)) * 0.05;
-    renderer.render(scene, camera);
-  })();
-
-  }, function(err) {
-    console.error('Failed:', cfg.modelUrl, err);
-  });
+    }, function(err) {
+      console.error('Failed:', cfg.modelUrl, err);
+    });
 
   }); // fecha CHARS.forEach
 
