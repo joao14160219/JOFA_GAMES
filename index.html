@@ -1558,6 +1558,13 @@ window.addEventListener('load', function() {
   function parseGLB(buffer, onLoad) {
   var view = new DataView(buffer);
   var magic = String.fromCharCode(view.getUint8(0),view.getUint8(1),view.getUint8(2),view.getUint8(3));
+
+    
+  function parseGLB(buffer, onLoad) {
+  var view = new DataView(buffer);
+  var magic = String.fromCharCode(view.getUint8(0),view.getUint8(1),view.getUint8(2),view.getUint8(3));
+  console.log('Magic:', magic, '| URL tentada:', arguments);
+    
   if (magic !== 'glTF') { console.error('Not a GLB'); return; }
 
   var offset=12, jsonData=null, binBuffer=null;
