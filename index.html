@@ -1277,6 +1277,9 @@ function parseGLB(buf,onLoad){
 function mkScene(cid,opts){
   opts=opts||{};var canvas=document.getElementById(cid);if(!canvas)return null;
   var renderer=new THREE.WebGLRenderer({canvas:canvas,alpha:true,antialias:true});renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  renderer.shadowMap.enabled = true;
+  
   var scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(34,1,.1,100);camera.position.set(0,1,6);camera.lookAt(0,.8,0);
   scene.add(new THREE.AmbientLight(0xffffff,opts.amb||.45));
   var dl=new THREE.DirectionalLight(0xffffff,opts.dli||1.2);dl.position.set(2,5,4);scene.add(dl);
