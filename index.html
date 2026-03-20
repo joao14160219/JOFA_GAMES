@@ -1259,30 +1259,112 @@ setWorld('s');
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 window.addEventListener('load',function(){
-    
-function loadGLB(url, onLoad, onError){
+
+function loadGLB(url, onLoad, onError) {
   fetch(url)
-    .then(r => {
-      console.log('GLB status:', url, r.status);  // ← ADICIONE
-      if(!r.ok) throw new Error('HTTP '+r.status);
+    .then(function(r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status + ' loading ' + url);
       return r.arrayBuffer();
     })
-    .then(buf => parseGLB(buf, onLoad))
-    .catch(e => {
-      console.error('GLB ERRO:', url, e);  // ← ADICIONE
-      if(onError) onError(e);
-    });
+    .then(function(buf) { parseGLB(buf, onLoad); })
+    .catch(function(e) { console.error('loadGLB error:', e); if (onError) onError(e); });
 }
-function parseGLB(buf,onLoad){
+
+
+function parseGLB(buf, onLoad){
   var v=new DataView(buf);
   if(String.fromCharCode(v.getUint8(0),v.getUint8(1),v.getUint8(2),v.getUint8(3))!=='glTF')return;
   var off=12,jd=null,bin=null;
-  while(off<buf.byteLength){var cl=v.getUint32(off,true),ct=v.getUint32(off+4,true),cd=buf.slice(off+8,off+8+cl);if(ct===0x4E4F534A)jd=JSON.parse(new TextDecoder().decode(new Uint8Array(cd)));if(ct===0x004E4942)bin=cd;off+=8+cl;}
-  if(!jd)return;
+
+
+while(off+8<=buf.byteLength){
+  var cl=v.getUint32(off,true);
+  var ct=v.getUint32(off+4,true);
+  if(cl===0||off+8+cl>buf.byteLength) break;
+  var cd=buf.slice(off+8,off+8+cl);
+  if(ct===0x4E4F534A) jd=JSON.parse(new TextDecoder().decode(new Uint8Array(cd)));
+  if(ct===0x004E4942) bin=cd;
+  off+=8+cl;
+}
+if(!jd){ console.error('sem JSON chunk'); return; }
+if(!bin){ console.warn('sem BIN chunk — tentando continuar sem texturas'); bin=new ArrayBuffer(0); }
+
+
   var g=jd,gr=new THREE.Group(),tx=[];
-  (g.textures||[]).forEach(function(td){var ii=td.source;if(ii==null||!g.images){tx.push(null);return;}var img=g.images[ii],bv=g.bufferViews[img.bufferView];var t=new THREE.TextureLoader().load(URL.createObjectURL(new Blob([new Uint8Array(bin,(bv.byteOffset||0),bv.byteLength)],{type:img.mimeType||'image/png'})));t.flipY=false;tx.push(t);});
-  function ga(i){var a=g.accessors[i],bv=g.bufferViews[a.bufferView];var o2=(bv.byteOffset||0)+(a.byteOffset||0);var n={SCALAR:1,VEC2:2,VEC3:3,VEC4:4,MAT4:16}[a.type]||1;var C={5120:Int8Array,5121:Uint8Array,5122:Int16Array,5123:Uint16Array,5125:Uint32Array,5126:Float32Array}[a.componentType]||Float32Array;return new C(bin,o2,a.count*n);}
-  (g.meshes||[]).forEach(function(md){(md.primitives||[]).forEach(function(p){var geo=new THREE.BufferGeometry();if(p.attributes.POSITION!=null)geo.setAttribute('position',new THREE.BufferAttribute(ga(p.attributes.POSITION),3));if(p.attributes.NORMAL!=null)geo.setAttribute('normal',new THREE.BufferAttribute(ga(p.attributes.NORMAL),3));if(p.attributes.TEXCOORD_0!=null)geo.setAttribute('uv',new THREE.BufferAttribute(ga(p.attributes.TEXCOORD_0),2));if(p.indices!=null)geo.setIndex(new THREE.BufferAttribute(ga(p.indices),1));if(!p.attributes.NORMAL)geo.computeVertexNormals();var mp={roughness:.8,metalness:0};if(p.material!=null&&g.materials&&g.materials[p.material]){var m=g.materials[p.material],pb=m.pbrMetallicRoughness||{};if(pb.baseColorFactor){var b=pb.baseColorFactor;mp.color=new THREE.Color(b[0],b[1],b[2]).getHex();}if(pb.baseColorTexture!=null&&tx[pb.baseColorTexture.index]){mp.map=tx[pb.baseColorTexture.index];delete mp.color;}if(pb.roughnessFactor!=null)mp.roughness=pb.roughnessFactor;if(pb.metallicFactor!=null)mp.metalness=pb.metallicFactor;}gr.add(new THREE.Mesh(geo,new THREE.MeshStandardMaterial(mp)));});});
+
+  // VERSÃO DEFENSIVA — checa bufferView antes de usar
+  (g.textures||[]).forEach(function(td){
+    var ii=td.source;
+    if(ii==null||!g.images){tx.push(null);return;}
+    var img=g.images[ii];
+    if(!img||img.bufferView==null){tx.push(null);return;}  // ← PROTEÇÃO
+    var bv=g.bufferViews[img.bufferView];
+    if(!bv){tx.push(null);return;}  // ← PROTEÇÃO
+    var t=new THREE.TextureLoader().load(
+      URL.createObjectURL(new Blob([new Uint8Array(bin,(bv.byteOffset||0),bv.byteLength)],{type:img.mimeType||'image/png'}))
+    );
+    t.flipY=false;
+    tx.push(t);
+  });
+
+function ga(i){
+  var a=g.accessors[i];
+  if(!a) return new Float32Array(0);
+  var bv=g.bufferViews[a.bufferView];
+  if(!bv) return new Float32Array(0);
+  var o2=(bv.byteOffset||0)+(a.byteOffset||0);
+  var n={SCALAR:1,VEC2:2,VEC3:3,VEC4:4,MAT4:16}[a.type]||1;
+  var C={5120:Int8Array,5121:Uint8Array,5122:Int16Array,5123:Uint16Array,5125:Uint32Array,5126:Float32Array}[a.componentType]||Float32Array;
+  try {
+    return new C(bin,o2,a.count*n);
+  } catch(e) {
+    console.error('ga() falhou: accessor='+i+' offset='+o2+' count='+a.count+' n='+n+' binSize='+bin.byteLength, e);
+    return new Float32Array(0);
+  }
+}
+
+  (g.meshes||[]).forEach(function(md){
+  (md.primitives||[]).forEach(function(p){
+    try {
+      var geo=new THREE.BufferGeometry();
+
+      var pos=ga(p.attributes.POSITION);
+      if(!pos||pos.length===0) return; // ← pula primitiva sem geometria
+      geo.setAttribute('position',new THREE.BufferAttribute(pos,3));
+
+      if(p.attributes.NORMAL!=null){
+        var nor=ga(p.attributes.NORMAL);
+        if(nor&&nor.length>0) geo.setAttribute('normal',new THREE.BufferAttribute(nor,3));
+      }
+      if(p.attributes.TEXCOORD_0!=null){
+        var uv=ga(p.attributes.TEXCOORD_0);
+        if(uv&&uv.length>0) geo.setAttribute('uv',new THREE.BufferAttribute(uv,2));
+      }
+      if(p.indices!=null){
+        var idx=ga(p.indices);
+        if(idx&&idx.length>0) geo.setIndex(new THREE.BufferAttribute(idx,1));
+      }
+      if(!p.attributes.NORMAL) geo.computeVertexNormals();
+
+      var mp={roughness:.8,metalness:0};
+      if(p.material!=null&&g.materials&&g.materials[p.material]){
+        var m=g.materials[p.material],pb=m.pbrMetallicRoughness||{};
+        if(pb.baseColorFactor){var b=pb.baseColorFactor;mp.color=new THREE.Color(b[0],b[1],b[2]).getHex();}
+        if(pb.baseColorTexture!=null&&tx[pb.baseColorTexture.index]){mp.map=tx[pb.baseColorTexture.index];delete mp.color;}
+        if(pb.roughnessFactor!=null)mp.roughness=pb.roughnessFactor;
+        if(pb.metallicFactor!=null)mp.metalness=pb.metallicFactor;
+      }
+
+      var mesh=new THREE.Mesh(geo,new THREE.MeshStandardMaterial(mp));
+      mesh.castShadow=true;
+      gr.add(mesh);
+
+    } catch(e) {
+      console.warn('primitiva ignorada:', e);
+    }
+  });
+});
+
   onLoad({scene:gr});
 }
 function mkScene(cid,opts){
@@ -1306,8 +1388,12 @@ function mkScene(cid,opts){
   return{renderer,scene,camera,isd:()=>isd,t:()=>t,setT:v=>{t=v;},rotY:()=>rotY,setRY:v=>{rotY=v;},rotX:()=>rotX,setRX:v=>{rotX=v;},tgtY:()=>tgtY,setTY:v=>{tgtY=v;},tgtX:()=>tgtX,setTX:v=>{tgtX=v;}};
 }
 function attachModel(so,model,canvas){
+  console.log('attachModel - children:', model.children.length);
   var box=new THREE.Box3().setFromObject(model),sz=box.getSize(new THREE.Vector3());
   var sc=2.2/Math.max(sz.x,sz.y,sz.z);model.scale.setScalar(sc);
+  console.log('box size:', sz.x, sz.y, sz.z);  // ← ADD
+  console.log('box isEmpty:', box.isEmpty());  // ← ADD
+
   box.setFromObject(model);var ctr=box.getCenter(new THREE.Vector3());
   model.position.set(-ctr.x,-box.min.y,-ctr.z);so.scene.add(model);
   function resize(){var w=canvas.parentElement.clientWidth||280,h=canvas.parentElement.clientHeight||320;so.renderer.setSize(w,h,false);so.camera.aspect=w/h;so.camera.updateProjectionMatrix();}
@@ -1324,30 +1410,38 @@ function attachModel(so,model,canvas){
   })();
 }
 
-
-document.getElementById("gameModal").addEventListener("click", (e)=>{
-  if(e.target.id === "gameModal"){
-    closeModal()
-  }
-})
-
 [{cid:'canvas1',url:'/eu_red.glb'},{cid:'canvas2',url:'/p_red.glb'}].forEach(function(cfg){
   var so=mkScene(cfg.cid,{rim:0xff6600,rimi:.4});if(!so)return;
-  loadGLB(cfg.url,function(g){document.getElementById(cfg.cid).style.display='block';attachModel(so,g.scene,document.getElementById(cfg.cid));});
+  loadGLB(cfg.url,function(g){
+    var c=document.getElementById(cfg.cid);
+    c.style.display='block';
+    attachModel(so,g.scene,c);
+  },function(err){console.error('INFERNO falhou:',cfg.url,err);});
 });
-(function(){
-  [{cid:'skyCanvas1',url:'/eu_saint.glb',ph:'skyPh1'},{cid:'skyCanvas2',url:'/p_saint.glb',ph:'skyPh2'}].forEach(function(cfg){
-    var so=mkScene(cfg.cid,{amb:.65,dli:1.5,rim:0xaaddff,rimi:.3});if(!so)return;
-    loadGLB(cfg.url,function(g){var ph=document.getElementById(cfg.ph);if(ph)ph.style.display='none';var c=document.getElementById(cfg.cid);c.style.display='block';attachModel(so,g.scene,c);},function(){});
-  });
-})();
-(function(){
-  [{cid:'balCanvas1',url:'/eu_golden.glb',ph:'balPh1'},{cid:'balCanvas2',url:'/p_prt.glb',ph:'balPh2'}].forEach(function(cfg){
-    var so=mkScene(cfg.cid,{rim:0x8b00ff,rimi:.5});if(!so)return;
-    loadGLB(cfg.url,function(g){var ph=document.getElementById(cfg.ph);if(ph)ph.style.display='none';var c=document.getElementById(cfg.cid);c.style.display='block';attachModel(so,g.scene,c);},function(){});
-  });
-})();
+
+[{cid:'skyCanvas1',url:'/eu_saint.glb',ph:'skyPh1'},{cid:'skyCanvas2',url:'/p_saint.glb',ph:'skyPh2'}].forEach(function(cfg){
+  var so=mkScene(cfg.cid,{amb:.65,dli:1.5,rim:0xaaddff,rimi:.3});if(!so)return;
+  loadGLB(cfg.url,function(g){
+    var ph=document.getElementById(cfg.ph);if(ph)ph.style.display='none';
+    var c=document.getElementById(cfg.cid);c.style.display='block';
+    attachModel(so,g.scene,c);
+  },function(err){console.error('CÉU falhou:',cfg.url,err);});
 });
+
+[{cid:'balCanvas1',url:'/eu_golden.glb',ph:'balPh1'},{cid:'balCanvas2',url:'/p_prt.glb',ph:'balPh2'}].forEach(function(cfg){
+  var so=mkScene(cfg.cid,{rim:0x8b00ff,rimi:.5});if(!so)return;
+  loadGLB(cfg.url,function(g){
+    var ph=document.getElementById(cfg.ph);if(ph)ph.style.display='none';
+    var c=document.getElementById(cfg.cid);c.style.display='block';
+    attachModel(so,g.scene,c);
+  },function(err){console.error('BALADA falhou:',cfg.url,err);});
+});
+
+document.getElementById("gameModal").addEventListener("click",function(e){
+  if(e.target.id==="gameModal") closeModal();
+});
+
+}); // fecha o window.addEventListener('load')
 
 function openModal(tipo){
   const modal = document.getElementById("gameModal")
@@ -1361,7 +1455,7 @@ function openModal(tipo){
     },
     balada: {
       titulo: "🎵 Edição Balada",
-      texto:  "Esse aqui não é aquecimento… é preparação estratégica pra noite dar certo. O Balada foi feito pra te colocar no nível certo antes de sair — nem travado, nem perdido. Desafios rápidos, clima acelerado e aquela energia de “hoje vai”. Perfeito pra jogar com os amigos antes do rolê e já sair de casa no modo festa ativado.",
+      texto:  "Esse aqui não é aquecimento… é preparação estratégica pra noite dar certo. O Balada foi feito pra te colocar no nível certo antes de sair — nem travado, nem perdido. Desafios rápidos, clima acelerado e aquela energia de hoje vai. Perfeito pra jogar com os amigos antes do rolê e já sair de casa no modo festa ativado.",
       tema:   "tema-balada"
     },
     inferno: {
@@ -1375,7 +1469,6 @@ function openModal(tipo){
   document.getElementById("gm-title").innerText = d.titulo
   document.getElementById("gm-text").innerText  = d.texto
 
-  // Remove temas anteriores e aplica o novo
   card.classList.remove("tema-ceu", "tema-balada", "tema-inferno")
   card.classList.add(d.tema)
 
@@ -1385,24 +1478,19 @@ function openModal(tipo){
 function closeModal(){
   document.getElementById("gameModal").classList.remove('active')
 }
-
 </script>
 
 
-    <div id="gameModal" class="gm">
-        <div class="gm-card">
-            <h2 id="gm-title"></h2>
-            <p id="gm-text"></p>
-
-            <button onclick="document.getElementById('gameModal').classList.remove('active')" class="pc-btn">
-                Fechar
-            </button>
-        </div>
-    </div>
-
+    <!-- SUBSTITUA o bloco do gameModal por este: -->
+<div id="gameModal" class="gm">
+  <div class="gm-card">
     <h2 id="gm-title"></h2>
     <p id="gm-text"></p>
-
+    <button onclick="document.getElementById('gameModal').classList.remove('active')" class="pc-btn">
+      Fechar
+    </button>
+  </div>
 </div>
+
 </body>
 </html>
