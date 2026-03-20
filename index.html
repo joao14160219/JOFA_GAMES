@@ -1259,8 +1259,19 @@ setWorld('s');
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 window.addEventListener('load',function(){
-function loadGLB(url,onLoad,onError){
-  fetch(url).then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.arrayBuffer();}).then(buf=>parseGLB(buf,onLoad)).catch(e=>{if(onError)onError(e);});
+    
+function loadGLB(url, onLoad, onError){
+  fetch(url)
+    .then(r => {
+      console.log('GLB status:', url, r.status);  // ← ADICIONE
+      if(!r.ok) throw new Error('HTTP '+r.status);
+      return r.arrayBuffer();
+    })
+    .then(buf => parseGLB(buf, onLoad))
+    .catch(e => {
+      console.error('GLB ERRO:', url, e);  // ← ADICIONE
+      if(onError) onError(e);
+    });
 }
 function parseGLB(buf,onLoad){
   var v=new DataView(buf);
@@ -1279,7 +1290,7 @@ function mkScene(cid,opts){
   var renderer=new THREE.WebGLRenderer({canvas:canvas,alpha:true,antialias:true});renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
   renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
   renderer.shadowMap.enabled = true;
-  
+
   var scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(34,1,.1,100);camera.position.set(0,1,6);camera.lookAt(0,.8,0);
   scene.add(new THREE.AmbientLight(0xffffff,opts.amb||.45));
   var dl=new THREE.DirectionalLight(0xffffff,opts.dli||1.2);dl.position.set(2,5,4);scene.add(dl);
