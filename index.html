@@ -6,7 +6,7 @@
 <title>JOFA GAME — Três Mundos. Uma Noite.</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@300;400;500;600;700&family=Special+Elite&display=swap" rel="stylesheet">
 <style>
-/* ══ RESET ══ */
+/* â•â• RESET â•â• */
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 :root{
   --s1:#e0f0ff;--s2:#b8d8f5;--s3:#7ab8e8;--s4:#3a80cc;--s5:#0d2844;
@@ -19,7 +19,7 @@
 }
 html{overflow-x:hidden;scroll-behavior:smooth;}
 
-/* ══ BODY THEME — transição suave entre mundos ══ */
+/* â•â• BODY THEME â€” transiÃ§Ã£o suave entre mundos â•â• */
 body{
   font-family:var(--fb);overflow-x:hidden;cursor:none;
   transition:background 1.8s ease;
@@ -29,7 +29,7 @@ body.wb{background:var(--b1);color:#fff;}
 body.wi{background:linear-gradient(180deg,var(--i5) 0%,#140800 50%,var(--i5) 100%);color:var(--cream);}
 body.wp{background:#000;color:#fff;}
 
-/* ══ JOURNEY MASK — do documento de referência, APENAS cosmético ══ */
+/* â•â• JOURNEY MASK â€” do documento de referÃªncia, APENAS cosmÃ©tico â•â• */
 #journey-mask{
   position:fixed;inset:0;z-index:400;pointer-events:none;
   background:var(--mask-bg,transparent);
@@ -53,7 +53,7 @@ body.wp{background:#000;color:#fff;}
   transition:background 1.4s ease;
 }
 
-/* ══ CURSOR ══ */
+/* â•â• CURSOR â•â• */
 #cur,#cur2{position:fixed;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:background .35s,box-shadow .35s,width .15s,height .15s;}
 #cur{width:10px;height:10px;}
 #cur2{width:34px;height:34px;border:1px solid rgba(255,255,255,.25);z-index:9998;transition:width .25s,height .25s,border-color .35s;}
@@ -68,7 +68,7 @@ body.wp #cur2{border-color:rgba(255,255,255,.18);}
 body.hov #cur{width:20px;height:20px;}
 body.hov #cur2{width:60px;height:60px;}
 
-/* ══ NAV ══ */
+/* â•â• NAV â•â• */
 #gnav{
   position:fixed;top:0;left:0;right:0;z-index:600;
   padding:1rem 5vw;display:flex;align-items:center;justify-content:space-between;
@@ -96,7 +96,7 @@ body.hov #cur2{width:60px;height:60px;}
 #gnav.nb .ncta{background:linear-gradient(135deg,var(--b2),var(--b3));color:#fff;}
 #gnav.ni .ncta,#gnav.np .ncta{background:linear-gradient(135deg,var(--i1),var(--i2));color:#000;}
 
-/* ══ SECTION ANATOMY ══ */
+/* â•â• SECTION ANATOMY â•â• */
 .world-section{position:relative;z-index:5;padding:0;}
 .inner{padding:0 6vw;}
 .sec-label{font-family:var(--ft);font-size:9px;letter-spacing:.45em;text-transform:uppercase;display:flex;align-items:center;gap:12px;margin-bottom:1.2rem;}
@@ -160,13 +160,13 @@ body.hov #cur2{width:60px;height:60px;}
 .pt4{padding-top:4rem;}.pb4{padding-bottom:4rem;}
 .sec-pad{padding:5rem 6vw;}
 
-/* ══ REVEAL ══ */
+/* â•â• REVEAL â•â• */
 .rev{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease;}
 .rev.vis{opacity:1;transform:none;}
 
-/* ════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    WORLD 1 — CÉU
-════════════════════════════════ */
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 /* Clouds */
 .clouds{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:1;opacity:0;transition:opacity 1.5s;}
 body.ws .clouds{opacity:1;}
@@ -243,9 +243,9 @@ body.ws .sky-eyebrow{color:var(--s5);opacity:.65;}
 .pawn-bounce{animation:pb .5s ease-in-out infinite alternate;}
 @keyframes pb{from{transform:translate(-50%,-100%) translateY(0);}to{transform:translate(-50%,-100%) translateY(-4px);}}
 
-/* ════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    WORLD 2 — BALADA
-════════════════════════════════ */
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 /* Fixed neon bg layers — visíveis só quando body.wb */
 .bal-bgs{position:fixed;inset:0;pointer-events:none;z-index:1;opacity:0;transition:opacity 1.5s;}
 body.wb .bal-bgs{opacity:1;}
@@ -291,9 +291,9 @@ body.wb .bal-bgs{opacity:1;}
 .bal-cgring{width:180px;background:radial-gradient(ellipse,rgba(255,0,200,.4),transparent);}
 .bal-cname{background:linear-gradient(135deg,var(--b3),var(--b4));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 
-/* ════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    WORLD 3 — INFERNO
-════════════════════════════════ */
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 /* Fixed fire bg */
 .inf-bgs{position:fixed;inset:0;pointer-events:none;z-index:1;opacity:0;transition:opacity 1.5s;}
 body.wi .inf-bgs{opacity:1;}
@@ -354,9 +354,9 @@ body.wi .flames-layer{opacity:1;}
 .bal-cw canvas{width:100%!important;height:100%!important;display:block;background:transparent;}
 .bal-cgring2{width:120px;background:radial-gradient(ellipse,rgba(255,0,200,.35),transparent);}
 
-/* ════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    PRICING
-════════════════════════════════ */
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 #pricing{background:#000;padding:8rem 5vw 7rem;position:relative;z-index:10;}
 .pr-intro{text-align:center;margin-bottom:4.5rem;}
 .pr-lbl{font-family:var(--ft);font-size:9px;letter-spacing:.5em;text-transform:uppercase;color:rgba(255,255,255,.22);margin-bottom:1rem;}
@@ -461,6 +461,71 @@ footer{background:#000;border-top:1px solid rgba(255,255,255,.05);padding:2.5rem
   margin-bottom: 1.5rem;
 }
 
+.waitlist-form{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  margin-top:1.4rem;
+  text-align:left;
+}
+
+.waitlist-form label{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  font-family:var(--ft);
+  font-size:10px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+}
+
+.waitlist-form input{
+  width:100%;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.16);
+  background:rgba(0,0,0,.18);
+  color:inherit;
+  padding:14px 16px;
+  font-family:var(--fb);
+  font-size:16px;
+  outline:none;
+}
+
+.waitlist-form input::placeholder{
+  color:rgba(255,255,255,.35);
+}
+
+.waitlist-form input:focus{
+  border-color:currentColor;
+  box-shadow:0 0 0 3px rgba(255,255,255,.08);
+}
+
+.waitlist-actions{
+  display:flex;
+  gap:12px;
+  margin-top:8px;
+}
+
+.waitlist-actions .pc-btn{
+  border:none;
+  cursor:none;
+}
+
+.waitlist-cancel{
+  background:transparent !important;
+  color:inherit !important;
+  border:1px solid currentColor !important;
+  box-shadow:none !important;
+}
+
+.waitlist-status{
+  min-height:18px;
+  margin-top:4px;
+  font-size:12px;
+  letter-spacing:.04em;
+  opacity:.8;
+}
+
 /* Modal temas */
 .gm-card.tema-ceu {
   background: linear-gradient(160deg, #daeeff, #eef7ff, #cce5ff);
@@ -471,6 +536,8 @@ footer{background:#000;border-top:1px solid rgba(255,255,255,.05);padding:2.5rem
 .gm-card.tema-ceu h2 { color: var(--s4); font-family: var(--fd); letter-spacing: .08em; }
 .gm-card.tema-ceu p  { color: var(--s5); opacity: .75; }
 .gm-card.tema-ceu .pc-btn { background: linear-gradient(135deg, var(--s4), #1450a0); color: #fff; border: none; }
+.gm-card.tema-ceu .waitlist-form input{background:rgba(255,255,255,.72);border-color:rgba(58,128,204,.24);color:var(--s5);}
+.gm-card.tema-ceu .waitlist-form input::placeholder{color:rgba(13,40,68,.45);}
 
 .gm-card.tema-balada {
   background: linear-gradient(160deg, #0a0018, #130025, #0a0018);
@@ -481,6 +548,7 @@ footer{background:#000;border-top:1px solid rgba(255,255,255,.05);padding:2.5rem
 .gm-card.tema-balada h2 { background: linear-gradient(135deg, var(--b3), var(--b4)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-family: var(--fd); letter-spacing: .08em; }
 .gm-card.tema-balada p  { color: rgba(255,255,255,.55); }
 .gm-card.tema-balada .pc-btn { background: linear-gradient(135deg, var(--b2), var(--b3)); color: #fff; border: none; box-shadow: 0 0 20px rgba(255,0,200,.3); }
+.gm-card.tema-balada .waitlist-form input{background:rgba(255,255,255,.06);border-color:rgba(255,0,204,.18);}
 
 .gm-card.tema-inferno {
   background: linear-gradient(160deg, #1c0900, #2e1400, #1c0900);
@@ -491,6 +559,7 @@ footer{background:#000;border-top:1px solid rgba(255,255,255,.05);padding:2.5rem
 .gm-card.tema-inferno h2 { background: linear-gradient(135deg, var(--i4), var(--i2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-family: var(--fd); letter-spacing: .08em; }
 .gm-card.tema-inferno p  { color: rgba(255,248,236,.55); }
 .gm-card.tema-inferno .pc-btn { background: linear-gradient(135deg, var(--i1), var(--i2), var(--i3)); color: #0a0400; border: none; box-shadow: 0 0 20px rgba(255,80,0,.35); }
+.gm-card.tema-inferno .waitlist-form input{background:rgba(255,248,236,.06);border-color:rgba(255,140,0,.2);}
 
 body.modal-open > *:not(#gameModal){
   filter: blur(6px);
@@ -550,7 +619,7 @@ body.modal-open > *:not(#gameModal){
   color:#fff;
 }
 
-/* ══ RESPONSIVE ══ */
+/* â•â• RESPONSIVE â•â• */
 @media(max-width:1100px){
   .world-h1{font-size:clamp(3.8rem,10vw,10rem);}
   .inf-cw{height:260px;}
@@ -621,7 +690,7 @@ body.modal-open > *:not(#gameModal){
 .sky-cw,
 .bal-cw,
 .inf-cw{
-  height:350px; /* aumenta o GLB */
+  height:600px; /* aumenta o GLB */
   width:100%;
 }
 
@@ -775,9 +844,9 @@ body.modal-open > *:not(#gameModal){
   <a href="#pricing" class="ncta">COMPRAR</a>
 </nav>
 
-<!-- ══════════════════════════════════════════
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      WORLD 1 — CÉU  (scroll nativo normal)
-══════════════════════════════════════════ -->
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 <div id="sw" class="world-section">
 
   <!-- Hero -->
@@ -877,12 +946,12 @@ body.modal-open > *:not(#gameModal){
   </div>
 </div><!-- /sw -->
 
-<!-- DIVISOR TEMÁTICO -->
+<!-- DIVISOR TEMÃTICO -->
 <div class="div-bal" style="position:relative;z-index:10;"></div>
 
-<!-- ══════════════════════════════════════════
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      WORLD 2 — BALADA
-══════════════════════════════════════════ -->
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 <div id="bw" class="world-section">
 
   <div class="hero-grid">
@@ -951,9 +1020,9 @@ body.modal-open > *:not(#gameModal){
 
 <div class="div-inf" style="position:relative;z-index:10;"></div>
 
-<!-- ══════════════════════════════════════════
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      WORLD 3 — INFERNO
-══════════════════════════════════════════ -->
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 <div id="iw" class="world-section">
 
   <div class="hero-grid">
@@ -1036,7 +1105,7 @@ body.modal-open > *:not(#gameModal){
   </div>
 </div><!-- /iw -->
 
-<!-- ══════ PRICING ══════ -->
+<!-- â•â•â•â•â•â• PRICING â•â•â•â•â•â• -->
 <section id="pricing">
   <div class="pr-intro rev">
     <div class="pr-lbl">// Escolha seu mundo</div>
@@ -1058,8 +1127,8 @@ body.modal-open > *:not(#gameModal){
       <button onclick="openModal('ceu')" class="pc-btn" style="background:transparent;border:1px solid var(--s4);color:var(--s4);font-size:14px;">
       VER DESCRIÇÃO
       </button>
-      <a href="https://wa.me/5511999999999?text=Quero%20o%20JOFA%20GAME%20C%C3%A9u!" target="_blank" class="pc-btn">COMPRAR ☁️</a>
-      <div class="pc-sec">🔒 Pagamento seguro</div>
+      <button onclick="abrirCadastroDireto('ceu')" class="pc-btn buy-btn" data-edicao="ceu" type="button">ENTRAR NA LISTA DE ESPERA &#9729;&#65039;</button>
+      <div class="pc-sec">&#128274; Pagamento seguro</div>
     </div>
     <div class="pc pc-bal">
       <div class="pc-badge"><strong>🎵 EDIÇÃO BALADA</strong></div>
@@ -1075,8 +1144,8 @@ body.modal-open > *:not(#gameModal){
       <button onclick="openModal('balada')" class="pc-btn" style="background:transparent;border:1px solid var(--b3);color:var(--b3);font-size:14px;">
     VER DESCRIÇÃO
     </button>
-      <a href="https://wa.me/5511999999999?text=Quero%20o%20JOFA%20GAME%20Balada!" target="_blank" class="pc-btn">COMPRAR 🎵</a>
-      <div class="pc-sec">🔒 Pagamento seguro</div>
+      <button onclick="abrirCadastroDireto('balada')" class="pc-btn buy-btn" data-edicao="balada" type="button">ENTRAR NA LISTA DE ESPERA &#127925;</button>
+      <div class="pc-sec">&#128274; Pagamento seguro</div>
     </div>
     <div class="pc pc-inf">
       <div class="pc-badge"><strong>🔥 EDIÇÃO INFERNO</strong></div>
@@ -1092,8 +1161,8 @@ body.modal-open > *:not(#gameModal){
       <button onclick="openModal('inferno')" class="pc-btn" style="background:transparent;border:1px solid var(--i3);color:var(--i3);font-size:14px;">
        VER DESCRIÇÃO
       </button>
-      <a href="https://wa.me/5511999999999?text=Quero%20o%20JOFA%20GAME%20Inferno!" target="_blank" class="pc-btn">COMPRAR 🔥</a>
-      <div class="pc-sec">🔒 Pagamento seguro</div>
+      <button onclick="abrirCadastroDireto('inferno')" class="pc-btn buy-btn" data-edicao="inferno" type="button">ENTRAR NA LISTA DE ESPERA &#128293;</button>
+      <div class="pc-sec">&#128274; Pagamento seguro</div>
 
     </div>
   </div>
@@ -1111,7 +1180,7 @@ body.modal-open > *:not(#gameModal){
 </footer>
 
 <script>
-/* ══ CURSOR ══ */
+/* â•â• CURSOR â•â• */
 const cur=document.getElementById('cur'),cur2=document.getElementById('cur2');
 let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
@@ -1121,21 +1190,21 @@ document.querySelectorAll('a,button').forEach(el=>{
   el.addEventListener('mouseleave',()=>document.body.classList.remove('hov'));
 });
 
-/* ══ BOARD CELLS ══ */
+/* â•â• BOARD CELLS â•â• */
 (function(){
   const el=document.getElementById('boardCells');
   const p=['sky-b','sky-g','sky-y','sky-o','sky-r','sky-p','sky-w','sky-x','sky-b','sky-g','sky-y','sky-b'];
   for(let i=0;i<144;i++){const d=document.createElement('div');d.className='bc '+p[Math.floor(Math.random()*p.length)];el.appendChild(d);}
 })();
 
-/* ══ BOARD STRIPS ══ */
+/* â•â• BOARD STRIPS â•â• */
 (function(){
   const cols=['#a8d0f0','#b8e0a8','#f8e8a8','#f8c8a8','#f0a8b8','#c8b0e8','#d8eeff','#a8d0f0'];
   function ms(id,n){const el=document.getElementById(id);if(!el)return;for(let i=0;i<n;i++){const c=document.createElement('div');c.className='bs-cell';c.style.background=cols[i%cols.length];el.appendChild(c);}}
   ms('stripTop',10);ms('stripBottom',10);ms('stripLeft',8);ms('stripRight',8);
 })();
 
-/* ══ PAWN ══ */
+/* â•â• PAWN â•â• */
 (function(){
   const pawn=document.getElementById('boardPawn');if(!pawn)return;
   const m=7,N=12,steps=[];
@@ -1148,7 +1217,7 @@ document.querySelectorAll('a,button').forEach(el=>{
   mv();setInterval(mv,440);
 })();
 
-/* ══ CLOUDS ══ */
+/* â•â• CLOUDS â•â• */
 (function(){
   const el=document.getElementById('cloudsEl');
   for(let i=0;i<15;i++){
@@ -1166,7 +1235,7 @@ document.querySelectorAll('a,button').forEach(el=>{
   }
 })();
 
-/* ══ DISCO LIGHTS ══ */
+/* â•â• DISCO LIGHTS â•â• */
 (function(){
   const el=document.getElementById('discoEl');
   const cols=['#ff00cc','#8b00ff','#00ffcc','#ff0066','#6600ff','#ffcc00'];
@@ -1178,7 +1247,7 @@ document.querySelectorAll('a,button').forEach(el=>{
   }
 })();
 
-/* ══ FLAMES ══ */
+/* â•â• FLAMES â•â• */
 (function(){
   const el=document.getElementById('flamesEl');
   const cols=[['#ff2200','#ff4400'],['#ff5500','#ff7700'],['#ff8800','#ffaa00'],['#ffcc00','#ffee00'],['#cc1100','#ff2200']];
@@ -1190,11 +1259,11 @@ document.querySelectorAll('a,button').forEach(el=>{
   }
 })();
 
-/* ══════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    TEMA + NAV — via IntersectionObserver puro
    Sem sticky, sem scrollTop forçado, sem rollback.
    Cada seção entra no viewport → muda tema suavemente.
-══════════════════════════════════════════════ */
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 const gnav=document.getElementById('gnav');
 const nbS=document.getElementById('nb-s');
 const nbB=document.getElementById('nb-b');
@@ -1244,7 +1313,7 @@ window.addEventListener('scroll',()=>{
   });
 },{passive:true});
 
-/* ══ SCROLL REVEAL ══ */
+/* â•â• SCROLL REVEAL â•â• */
 const revEls=document.querySelectorAll('.rev');
 const revObs=new IntersectionObserver(es=>{
   es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');revObs.unobserve(e.target);}});
@@ -1297,9 +1366,9 @@ if(!bin){ console.warn('sem BIN chunk — tentando continuar sem texturas'); bin
     var ii=td.source;
     if(ii==null||!g.images){tx.push(null);return;}
     var img=g.images[ii];
-    if(!img||img.bufferView==null){tx.push(null);return;}  // ← PROTEÇÃO
+    if(!img||img.bufferView==null){tx.push(null);return;}  // â† PROTEÃ‡ÃƒO
     var bv=g.bufferViews[img.bufferView];
-    if(!bv){tx.push(null);return;}  // ← PROTEÇÃO
+    if(!bv){tx.push(null);return;}  // â† PROTEÃ‡ÃƒO
     var t=new THREE.TextureLoader().load(
       URL.createObjectURL(new Blob([new Uint8Array(bin,(bv.byteOffset||0),bv.byteLength)],{type:img.mimeType||'image/png'}))
     );
@@ -1329,7 +1398,7 @@ function ga(i){
       var geo=new THREE.BufferGeometry();
 
       var pos=ga(p.attributes.POSITION);
-      if(!pos||pos.length===0) return; // ← pula primitiva sem geometria
+      if(!pos||pos.length===0) return; // â† pula primitiva sem geometria
       geo.setAttribute('position',new THREE.BufferAttribute(pos,3));
 
       if(p.attributes.NORMAL!=null){
@@ -1391,8 +1460,8 @@ function attachModel(so,model,canvas){
   console.log('attachModel - children:', model.children.length);
   var box=new THREE.Box3().setFromObject(model),sz=box.getSize(new THREE.Vector3());
   var sc=2.2/Math.max(sz.x,sz.y,sz.z);model.scale.setScalar(sc);
-  console.log('box size:', sz.x, sz.y, sz.z);  // ← ADD
-  console.log('box isEmpty:', box.isEmpty());  // ← ADD
+  console.log('box size:', sz.x, sz.y, sz.z);  // â† ADD
+  console.log('box isEmpty:', box.isEmpty());  // â† ADD
 
   box.setFromObject(model);var ctr=box.getCenter(new THREE.Vector3());
   model.position.set(-ctr.x,-box.min.y,-ctr.z);so.scene.add(model);
@@ -1449,19 +1518,19 @@ function openModal(tipo){
 
   const dados = {
     ceu: {
-      titulo: "☁️ Edição Céu",
-      texto:  "Se a ideia é aquecer sem perder o controle, o Céu é o ponto de partida perfeito. Um jogo leve, divertido e social, feito pra quebrar o gelo, gerar risada e colocar todo mundo no clima. Aqui ninguém sai do eixo — mas ninguém fica parado. Ideal pra encontros, prézinhos tranquilos e noites que ainda estão só começando.",
-      tema:   "tema-ceu"
+      titulo: "\u2601\uFE0F Edi\u00E7\u00E3o C\u00E9u",
+      texto: "Se a ideia \u00E9 aquecer sem perder o controle, o C\u00E9u \u00E9 o ponto de partida perfeito. Um jogo leve, divertido e social, feito pra quebrar o gelo, gerar risada e colocar todo mundo no clima. Aqui ningu\u00E9m sai do eixo, mas ningu\u00E9m fica parado.",
+      tema: "tema-ceu"
     },
     balada: {
-      titulo: "🎵 Edição Balada",
-      texto:  "Esse aqui não é aquecimento… é preparação estratégica pra noite dar certo. O Balada foi feito pra te colocar no nível certo antes de sair — nem travado, nem perdido. Desafios rápidos, clima acelerado e aquela energia de hoje vai. Perfeito pra jogar com os amigos antes do rolê e já sair de casa no modo festa ativado.",
-      tema:   "tema-balada"
+      titulo: "\uD83C\uDFB5 Edi\u00E7\u00E3o Balada",
+      texto: "Esse aqui n\u00E3o \u00E9 aquecimento, \u00E9 prepara\u00E7\u00E3o estrat\u00E9gica pra noite dar certo. O Balada foi feito pra te colocar no n\u00EDvel certo antes de sair, com desafios r\u00E1pidos, clima acelerado e energia de festa.",
+      tema: "tema-balada"
     },
     inferno: {
-      titulo: "🔥 Apocalipse Etílico",
-      texto:  "Esse não é um jogo… é um evento. Apocalipse Etílico é pra quem quer testar limites, criar histórias absurdas e viver uma noite que provavelmente ninguém vai lembrar direito no dia seguinte. Aqui as regras saem do controle, os desafios pesam e a intensidade só sobe. Não é pra iniciantes. Não é pra os fracos.",
-      tema:   "tema-inferno"
+      titulo: "\uD83D\uDD25 Apocalipse Et\u00EDlico",
+      texto: "Esse n\u00E3o \u00E9 um jogo, \u00E9 um evento. Apocalipse Et\u00EDlico \u00E9 pra quem quer testar limites, criar hist\u00F3rias absurdas e viver uma noite que provavelmente ningu\u00E9m vai lembrar direito no dia seguinte. N\u00E3o \u00E9 pra iniciantes.",
+      tema: "tema-inferno"
     }
   }
 
@@ -1486,11 +1555,166 @@ function closeModal(){
   <div class="gm-card">
     <h2 id="gm-title"></h2>
     <p id="gm-text"></p>
-    <button onclick="document.getElementById('gameModal').classList.remove('active')" class="pc-btn">
+    <button onclick="document.getElementById('gameModal').classList.remove('active')" class="pc-btn" type="button">
       Fechar
     </button>
   </div>
 </div>
 
+<div id="waitlistModal" class="gm">
+  <div class="gm-card">
+    <h2 id="waitlist-title"></h2>
+    <p id="waitlist-text"></p>
+    <form id="waitlistForm" class="waitlist-form">
+      <input id="waitlist-edicao" name="edicao" type="hidden">
+      <label>
+        Nome
+        <input id="waitlist-nome" name="nome" type="text" placeholder="Seu nome" required>
+      </label>
+      <label>
+        Email
+        <input id="waitlist-email" name="email" type="email" placeholder="voce@email.com" required>
+      </label>
+      <label>
+        WhatsApp
+        <input id="waitlist-whatsapp" name="whatsapp" type="tel" placeholder="(11) 99999-9999" required>
+      </label>
+
+      <div id="waitlist-status" class="waitlist-status"></div>
+      <div class="waitlist-actions">
+        <button type="submit" id="waitlist-submit" class="pc-btn">Entrar na lista</button>
+        <button type="button" onclick="fecharCadastro()" class="pc-btn waitlist-cancel">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const { createClient } = window.supabase || {};
+const supabaseClient = createClient ? createClient(
+  "https://zjlwvjlvvwwbivohabrr.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpqbHd2amx2dnd3Yml2b2hhYnJyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU1NTA1ODcsImV4cCI6MjA5MTEyNjU4N30.6jJlJ3HPfgPWW6h8a-7H1KfjnRY0M0QViWw3cdLAV8A"
+) : null;
+
+const waitlistModal = document.getElementById("waitlistModal");
+const waitlistCard = waitlistModal.querySelector(".gm-card");
+const waitlistForm = document.getElementById("waitlistForm");
+const waitlistTitle = document.getElementById("waitlist-title");
+const waitlistText = document.getElementById("waitlist-text");
+const waitlistStatus = document.getElementById("waitlist-status");
+const waitlistSubmit = document.getElementById("waitlist-submit");
+const waitlistWhatsapp = document.getElementById("waitlist-whatsapp");
+const waitlistEdicao = document.getElementById("waitlist-edicao");
+const waitlistEmail = document.getElementById("waitlist-email");
+
+const waitlistDados = {
+  ceu: {
+    titulo: "☁️ Lista de espera: Céu",
+    texto: "Preencha seus dados para entrar na lista de espera da edição Céu.",
+    tema: "tema-ceu"
+  },
+  balada: {
+    titulo: "🎵 Lista de espera: Balada",
+    texto: "Preencha seus dados para entrar na lista de espera da edição Balada.",
+    tema: "tema-balada"
+  },
+  inferno: {
+    titulo: "🔥 Lista de espera: Inferno",
+    texto: "Preencha seus dados para entrar na lista de espera da edição Inferno.",
+    tema: "tema-inferno"
+  }
+};
+
+function formatarWhatsApp(valor) {
+  const digitos = valor.replace(/\D/g, "").slice(0, 11);
+  if (digitos.length <= 2) return digitos;
+  if (digitos.length <= 7) return `(${digitos.slice(0, 2)}) ${digitos.slice(2)}`;
+  return `(${digitos.slice(0, 2)}) ${digitos.slice(2, 7)}-${digitos.slice(7)}`;
+}
+
+function abrirCadastroDireto(edicao) {
+  const dados = waitlistDados[edicao];
+  if (!dados) return;
+
+  waitlistEdicao.value = edicao;
+  waitlistTitle.textContent = dados.titulo;
+  waitlistText.textContent = dados.texto;
+  waitlistCard.classList.remove("tema-ceu", "tema-balada", "tema-inferno");
+  waitlistCard.classList.add(dados.tema);
+  waitlistStatus.textContent = "";
+  waitlistForm.reset();
+  waitlistSubmit.disabled = false;
+  waitlistSubmit.textContent = "Entrar na lista";
+  waitlistModal.classList.add("active");
+}
+
+function fecharCadastro() {
+  waitlistModal.classList.remove("active");
+}
+
+window.abrirCadastroDireto = abrirCadastroDireto;
+window.fecharCadastro = fecharCadastro;
+
+waitlistWhatsapp.addEventListener("input", function (event) {
+  event.target.value = formatarWhatsApp(event.target.value);
+});
+
+waitlistModal.addEventListener("click", function (event) {
+  if (event.target.id === "waitlistModal") fecharCadastro();
+});
+
+waitlistForm.addEventListener("submit", async function (event) {
+  event.preventDefault();
+
+  const nome = document.getElementById("waitlist-nome").value.trim();
+  const email = waitlistEmail.value.trim().toLowerCase();
+  const whatsapp = waitlistWhatsapp.value.replace(/\D/g, "");
+  const edicao = waitlistEdicao.value;
+
+  if (!nome || !email || whatsapp.length < 10 || !edicao) {
+    waitlistStatus.textContent = "Preencha nome, email e WhatsApp corretamente.";
+    return;
+  }
+
+  waitlistStatus.textContent = "Enviando...";
+  waitlistSubmit.disabled = true;
+  waitlistSubmit.textContent = "Enviando...";
+
+  if (!supabaseClient) {
+    waitlistStatus.textContent = "Não foi possível carregar o Supabase.";
+    waitlistSubmit.disabled = false;
+    waitlistSubmit.textContent = "Entrar na lista";
+    return;
+  }
+
+  const { error } = await supabaseClient
+    .from("waitlist")
+    .insert([
+      {
+        nome,
+        email,
+        whatsapp,
+        edicao
+      }
+    ]);
+
+  if (error) {
+    console.error(error);
+    waitlistStatus.textContent = "N\u00E3o foi poss\u00EDvel enviar agora. Tente novamente.";
+    waitlistSubmit.disabled = false;
+    waitlistSubmit.textContent = "Entrar na lista";
+    return;
+  }
+
+  waitlistStatus.textContent = "Cadastro enviado com sucesso. Confira seu email.";
+  waitlistSubmit.textContent = "Enviado";
+  setTimeout(fecharCadastro, 1200);
+});
+</script>
+
 </body>
 </html>
+
+
