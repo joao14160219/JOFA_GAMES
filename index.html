@@ -865,9 +865,9 @@ body.wi .flames-layer{opacity:1;}
 .depo-autor{font-family:var(--ft);font-size:10px;letter-spacing:.2em;color:rgba(255,255,255,.3);}
 
 /* MODALS */
-.gm{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(12px);display:flex!important;align-items:center;justify-content:center;z-index:99999;opacity:0;pointer-events:none;transition:.3s;}
+.gm{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(12px);display:flex!important;align-items:center;justify-content:center;z-index:99999;opacity:0;pointer-events:none;transition:.3s;padding:18px;overflow-y:auto;}
 .gm.active{opacity:1;pointer-events:auto;}
-.gm-card{width:min(92%,560px);background:#0f0f0f;border-radius:16px;padding:2rem;text-align:center;box-shadow:0 20px 80px rgba(0,0,0,.6);}
+.gm-card{width:min(92%,560px);max-height:min(92vh,860px);overflow-y:auto;background:#0f0f0f;border-radius:16px;padding:2rem;text-align:center;box-shadow:0 20px 80px rgba(0,0,0,.6);-webkit-overflow-scrolling:touch;}
 .gm-card p{margin-bottom:1.5rem;}
 .waitlist-form{display:flex;flex-direction:column;gap:14px;margin-top:1.4rem;text-align:left;}
 .waitlist-form label{display:flex;flex-direction:column;gap:6px;font-family:var(--ft);font-size:10px;letter-spacing:.18em;text-transform:uppercase;}
@@ -879,7 +879,7 @@ body.wi .flames-layer{opacity:1;}
 .waitlist-product-name{display:flex;flex-direction:column;gap:4px;}
 .waitlist-product-name strong{font-family:var(--fd);font-size:18px;letter-spacing:.05em;}
 .waitlist-product-name span{font-family:var(--ft);font-size:9px;letter-spacing:.16em;text-transform:uppercase;opacity:.55;}
-.waitlist-qty{display:flex;align-items:center;gap:10px;}
+.waitlist-qty{display:flex;align-items:center;gap:10px;flex:0 0 auto;}
 .waitlist-qty input{width:78px;padding:12px 10px;text-align:center;}
 .waitlist-summary{margin-top:-2px;font-size:12px;letter-spacing:.04em;opacity:.78;}
 .waitlist-actions{display:flex;gap:12px;margin-top:8px;}
@@ -907,11 +907,16 @@ body.wi .flames-layer{opacity:1;}
 .gm-card.tema-inferno .waitlist-product{background:rgba(255,248,236,.04);border-color:rgba(255,140,0,.16);}
 
 @media (max-width: 640px){
-  .gm-card{padding:1.4rem;}
+  .gm{align-items:flex-start;padding:10px;}
+  .gm-card{width:100%;max-height:calc(100vh - 20px);padding:1.1rem 1rem 1.25rem;border-radius:14px;margin:auto 0;}
+  .gm-card h2{font-size:clamp(1.6rem,7vw,2.1rem);}
+  .gm-card p{margin-bottom:1rem;}
+  .waitlist-form{gap:12px;margin-top:1rem;}
   .waitlist-product{align-items:flex-start;flex-direction:column;}
-  .waitlist-qty{width:100%;justify-content:space-between;}
-  .waitlist-qty input{width:100%;}
+  .waitlist-qty{width:100%;justify-content:space-between;gap:12px;}
+  .waitlist-qty input{width:92px;min-height:48px;}
   .waitlist-actions{flex-direction:column;}
+  .waitlist-actions .pc-btn{min-height:50px;}
 }
 
 /* FOOTER */
