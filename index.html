@@ -867,13 +867,21 @@ body.wi .flames-layer{opacity:1;}
 /* MODALS */
 .gm{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(12px);display:flex!important;align-items:center;justify-content:center;z-index:99999;opacity:0;pointer-events:none;transition:.3s;}
 .gm.active{opacity:1;pointer-events:auto;}
-.gm-card{width:min(90%,500px);background:#0f0f0f;border-radius:16px;padding:2rem;text-align:center;box-shadow:0 20px 80px rgba(0,0,0,.6);}
+.gm-card{width:min(92%,560px);background:#0f0f0f;border-radius:16px;padding:2rem;text-align:center;box-shadow:0 20px 80px rgba(0,0,0,.6);}
 .gm-card p{margin-bottom:1.5rem;}
 .waitlist-form{display:flex;flex-direction:column;gap:14px;margin-top:1.4rem;text-align:left;}
 .waitlist-form label{display:flex;flex-direction:column;gap:6px;font-family:var(--ft);font-size:10px;letter-spacing:.18em;text-transform:uppercase;}
 .waitlist-form input{width:100%;border-radius:12px;border:1px solid rgba(255,255,255,.16);background:rgba(0,0,0,.18);color:inherit;padding:14px 16px;font-family:var(--fb);font-size:16px;outline:none;}
 .waitlist-form input::placeholder{color:rgba(255,255,255,.35);}
 .waitlist-form input:focus{border-color:currentColor;box-shadow:0 0 0 3px rgba(255,255,255,.08);}
+.waitlist-products{display:flex;flex-direction:column;gap:10px;margin-bottom:6px;}
+.waitlist-product{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 16px;border-radius:14px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);}
+.waitlist-product-name{display:flex;flex-direction:column;gap:4px;}
+.waitlist-product-name strong{font-family:var(--fd);font-size:18px;letter-spacing:.05em;}
+.waitlist-product-name span{font-family:var(--ft);font-size:9px;letter-spacing:.16em;text-transform:uppercase;opacity:.55;}
+.waitlist-qty{display:flex;align-items:center;gap:10px;}
+.waitlist-qty input{width:78px;padding:12px 10px;text-align:center;}
+.waitlist-summary{margin-top:-2px;font-size:12px;letter-spacing:.04em;opacity:.78;}
 .waitlist-actions{display:flex;gap:12px;margin-top:8px;}
 .waitlist-actions .pc-btn{border:none;cursor:none;}
 .waitlist-cancel{background:transparent!important;color:inherit!important;border:1px solid currentColor!important;box-shadow:none!important;}
@@ -884,16 +892,27 @@ body.wi .flames-layer{opacity:1;}
 .gm-card.tema-ceu .pc-btn{background:linear-gradient(135deg,var(--s4),#1450a0);color:#fff;border:none;}
 .gm-card.tema-ceu .waitlist-form input{background:rgba(255,255,255,.72);border-color:rgba(58,128,204,.24);color:var(--s5);}
 .gm-card.tema-ceu .waitlist-form input::placeholder{color:rgba(13,40,68,.45);}
+.gm-card.tema-ceu .waitlist-product{background:rgba(255,255,255,.56);border-color:rgba(58,128,204,.18);}
 .gm-card.tema-balada{background:linear-gradient(160deg,#0a0018,#130025,#0a0018);border:1px solid rgba(123,0,255,.4);color:#fff;box-shadow:0 0 60px rgba(123,0,255,.25),0 20px 80px rgba(0,0,0,.6);}
 .gm-card.tema-balada h2{background:linear-gradient(135deg,var(--b3),var(--b4));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-family:var(--fd);letter-spacing:.08em;}
 .gm-card.tema-balada p{color:rgba(255,255,255,.55);}
 .gm-card.tema-balada .pc-btn{background:linear-gradient(135deg,var(--b2),var(--b3));color:#fff;border:none;box-shadow:0 0 20px rgba(255,0,200,.3);}
 .gm-card.tema-balada .waitlist-form input{background:rgba(255,255,255,.06);border-color:rgba(255,0,204,.18);}
+.gm-card.tema-balada .waitlist-product{background:rgba(255,255,255,.04);border-color:rgba(255,0,204,.14);}
 .gm-card.tema-inferno{background:linear-gradient(160deg,#1c0900,#2e1400,#1c0900);border:1px solid rgba(255,100,0,.35);color:var(--cream);box-shadow:0 0 60px rgba(255,80,0,.2),0 20px 80px rgba(0,0,0,.7);}
 .gm-card.tema-inferno h2{background:linear-gradient(135deg,var(--i4),var(--i2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-family:var(--fd);letter-spacing:.08em;}
 .gm-card.tema-inferno p{color:rgba(255,248,236,.55);}
 .gm-card.tema-inferno .pc-btn{background:linear-gradient(135deg,var(--i1),var(--i2),var(--i3));color:#0a0400;border:none;box-shadow:0 0 20px rgba(255,80,0,.35);}
 .gm-card.tema-inferno .waitlist-form input{background:rgba(255,248,236,.06);border-color:rgba(255,140,0,.2);}
+.gm-card.tema-inferno .waitlist-product{background:rgba(255,248,236,.04);border-color:rgba(255,140,0,.16);}
+
+@media (max-width: 640px){
+  .gm-card{padding:1.4rem;}
+  .waitlist-product{align-items:flex-start;flex-direction:column;}
+  .waitlist-qty{width:100%;justify-content:space-between;}
+  .waitlist-qty input{width:100%;}
+  .waitlist-actions{flex-direction:column;}
+}
 
 /* FOOTER */
 footer{background:#000;border-top:1px solid rgba(255,255,255,.05);padding:2.5rem 5vw;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;position:relative;z-index:10;}
@@ -1781,9 +1800,42 @@ function closeModal(){document.getElementById("gameModal").classList.remove('act
     <p id="waitlist-text"></p>
     <form id="waitlistForm" class="waitlist-form">
       <input id="waitlist-edicao" name="edicao" type="hidden">
-      <label>Nome<input id="waitlist-nome" name="nome" type="text" placeholder="Seu nome" required></label>
-      <label>Email<input id="waitlist-email" name="email" type="email" placeholder="voce@email.com" required></label>
-      <label>WhatsApp<input id="waitlist-whatsapp" name="whatsapp" type="tel" placeholder="(11) 99999-9999" required></label>
+      <div class="waitlist-products">
+        <div class="waitlist-product">
+          <div class="waitlist-product-name">
+            <strong>☁️ Céu</strong>
+            <span>Leve e divertido · R$119</span>
+          </div>
+          <div class="waitlist-qty">
+            <label for="waitlist-qty-ceu" style="gap:4px;font-size:9px;">Quantidade</label>
+            <input id="waitlist-qty-ceu" name="quantidade_ceu" type="number" min="0" max="20" step="1" value="0">
+          </div>
+        </div>
+        <div class="waitlist-product">
+          <div class="waitlist-product-name">
+            <strong>🎵 Balada</strong>
+            <span>Pré garantido · R$129</span>
+          </div>
+          <div class="waitlist-qty">
+            <label for="waitlist-qty-balada" style="gap:4px;font-size:9px;">Quantidade</label>
+            <input id="waitlist-qty-balada" name="quantidade_balada" type="number" min="0" max="20" step="1" value="0">
+          </div>
+        </div>
+        <div class="waitlist-product">
+          <div class="waitlist-product-name">
+            <strong>🔥 Apocalipse</strong>
+            <span>Sem limites · R$139</span>
+          </div>
+          <div class="waitlist-qty">
+            <label for="waitlist-qty-inferno" style="gap:4px;font-size:9px;">Quantidade</label>
+            <input id="waitlist-qty-inferno" name="quantidade_inferno" type="number" min="0" max="20" step="1" value="0">
+          </div>
+        </div>
+      </div>
+      <div id="waitlist-summary" class="waitlist-summary">Selecione pelo menos uma edição.</div>
+      <label>Nome<input id="waitlist-nome" name="nome" type="text" placeholder="Nome e sobrenome" autocomplete="name" minlength="5" maxlength="80" required></label>
+      <label>Email<input id="waitlist-email" name="email" type="email" placeholder="voce@email.com" autocomplete="email" inputmode="email" maxlength="120" required></label>
+      <label>WhatsApp<input id="waitlist-whatsapp" name="whatsapp" type="tel" placeholder="(11) 99999-9999" autocomplete="tel" inputmode="numeric" minlength="14" maxlength="15" required></label>
       <div id="waitlist-status" class="waitlist-status"></div>
       <div class="waitlist-actions">
         <button type="submit" id="waitlist-submit" class="pc-btn" style="clip-path:none;border-radius:10px;">Entrar na lista</button>
@@ -1802,30 +1854,48 @@ const waitlistCard=waitlistModal.querySelector(".gm-card");
 const waitlistForm=document.getElementById("waitlistForm");
 const waitlistTitle=document.getElementById("waitlist-title");
 const waitlistText=document.getElementById("waitlist-text");
+const waitlistSummary=document.getElementById("waitlist-summary");
 const waitlistStatus=document.getElementById("waitlist-status");
 const waitlistSubmit=document.getElementById("waitlist-submit");
+const waitlistNome=document.getElementById("waitlist-nome");
 const waitlistWhatsapp=document.getElementById("waitlist-whatsapp");
 const waitlistEdicao=document.getElementById("waitlist-edicao");
 const waitlistEmail=document.getElementById("waitlist-email");
-const waitlistDados={ceu:{titulo:"☁️ Lista de espera: Céu",texto:"Preencha seus dados para entrar na lista de espera da edição Céu.",tema:"tema-ceu"},balada:{titulo:"🎵 Lista de espera: Balada",texto:"Preencha seus dados para entrar na lista de espera da edição Balada.",tema:"tema-balada"},inferno:{titulo:"🔥 Lista de espera: Apocalipse",texto:"Preencha seus dados para entrar na lista de espera da edição Apocalipse.",tema:"tema-inferno"}};
+const waitlistQtyInputs={ceu:document.getElementById("waitlist-qty-ceu"),balada:document.getElementById("waitlist-qty-balada"),inferno:document.getElementById("waitlist-qty-inferno")};
+const waitlistDados={ceu:{titulo:"☁️ Monte sua lista: Céu",texto:"Escolha quantas unidades de cada edição você quer reservar. Você pode entrar na fila de várias em um único cadastro.",tema:"tema-ceu"},balada:{titulo:"🎵 Monte sua lista: Balada",texto:"Escolha quantas unidades de cada edição você quer reservar. Você pode entrar na fila de várias em um único cadastro.",tema:"tema-balada"},inferno:{titulo:"🔥 Monte sua lista: Apocalipse",texto:"Escolha quantas unidades de cada edição você quer reservar. Você pode entrar na fila de várias em um único cadastro.",tema:"tema-inferno"}};
 function formatarWhatsApp(v){const d=v.replace(/\D/g,"").slice(0,11);if(d.length<=2)return d;if(d.length<=7)return`(${d.slice(0,2)}) ${d.slice(2)}`;return`(${d.slice(0,2)}) ${d.slice(2,7)}-${d.slice(7)}`;}
-function abrirCadastroDireto(edicao){const dados=waitlistDados[edicao];if(!dados)return;waitlistEdicao.value=edicao;waitlistTitle.textContent=dados.titulo;waitlistText.textContent=dados.texto;waitlistCard.classList.remove("tema-ceu","tema-balada","tema-inferno");waitlistCard.classList.add(dados.tema);waitlistStatus.textContent="";waitlistForm.reset();waitlistSubmit.disabled=false;waitlistSubmit.textContent="Entrar na lista";waitlistModal.classList.add("active");}
+function normalizarNome(v){return v.replace(/\s+/g," ").trim();}
+function nomeValido(v){const nome=normalizarNome(v);if(nome.length<5)return false;const partes=nome.split(" ").filter(Boolean);return partes.length>=2&&partes.every(function(parte){return parte.length>=2;});}
+function emailValido(v){return/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i.test(v);}
+function whatsappValido(v){return/^[1-9]{2}(?:9\d{8}|\d{8})$/.test(v);}
+function sanitizarQuantidade(v){const n=Number.parseInt(v,10);if(Number.isNaN(n)||n<0)return 0;return Math.min(n,20);}
+function resetQuantidades(edicao){Object.keys(waitlistQtyInputs).forEach(function(key){waitlistQtyInputs[key].value=key===edicao?"1":"0";});}
+function itensSelecionados(){return Object.entries(waitlistQtyInputs).map(function(entry){const edicao=entry[0];const quantidade=sanitizarQuantidade(entry[1].value);entry[1].value=String(quantidade);return{edicao,quantidade};}).filter(function(item){return item.quantidade>0;});}
+function atualizarResumo(){const itens=itensSelecionados();if(!itens.length){waitlistSummary.textContent="Selecione pelo menos uma edição.";return;}const total=itens.reduce(function(sum,item){return sum+item.quantidade;},0);const resumo=itens.map(function(item){return`${item.quantidade}x ${item.edicao==="ceu"?"Céu":item.edicao==="balada"?"Balada":"Apocalipse"}`;}).join(" · ");waitlistSummary.textContent=`${total} unidade(s): ${resumo}`;}
+function abrirCadastroDireto(edicao){const dados=waitlistDados[edicao];if(!dados)return;waitlistEdicao.value=edicao;waitlistTitle.textContent=dados.titulo;waitlistText.textContent=dados.texto;waitlistCard.classList.remove("tema-ceu","tema-balada","tema-inferno");waitlistCard.classList.add(dados.tema);waitlistStatus.textContent="";waitlistForm.reset();resetQuantidades(edicao);atualizarResumo();waitlistSubmit.disabled=false;waitlistSubmit.textContent="Entrar na lista";waitlistModal.classList.add("active");}
 function fecharCadastro(){waitlistModal.classList.remove("active");}
 window.abrirCadastroDireto=abrirCadastroDireto;
 window.fecharCadastro=fecharCadastro;
+waitlistNome.addEventListener("blur",function(e){e.target.value=normalizarNome(e.target.value);});
 waitlistWhatsapp.addEventListener("input",function(e){e.target.value=formatarWhatsApp(e.target.value);});
+Object.values(waitlistQtyInputs).forEach(function(input){input.addEventListener("input",atualizarResumo);input.addEventListener("blur",function(){input.value=String(sanitizarQuantidade(input.value));atualizarResumo();});});
 waitlistModal.addEventListener("click",function(e){if(e.target.id==="waitlistModal")fecharCadastro();});
 waitlistForm.addEventListener("submit",async function(e){
   e.preventDefault();
-  const nome=document.getElementById("waitlist-nome").value.trim();
+  const nome=normalizarNome(waitlistNome.value);
   const email=waitlistEmail.value.trim().toLowerCase();
   const whatsapp=waitlistWhatsapp.value.replace(/\D/g,"");
-  const edicao=waitlistEdicao.value;
-  if(!nome||!email||whatsapp.length<10||!edicao){waitlistStatus.textContent="Preencha nome, email e WhatsApp corretamente.";return;}
+  const itens=itensSelecionados();
+  waitlistNome.value=nome;
+  if(!nomeValido(nome)){waitlistStatus.textContent="Digite nome e sobrenome válidos.";waitlistNome.focus();return;}
+  if(!emailValido(email)){waitlistStatus.textContent="Digite um email válido.";waitlistEmail.focus();return;}
+  if(!whatsappValido(whatsapp)){waitlistStatus.textContent="Digite um WhatsApp válido com DDD.";waitlistWhatsapp.focus();return;}
+  if(!itens.length){waitlistStatus.textContent="Escolha pelo menos uma edição e quantidade.";return;}
   waitlistStatus.textContent="Enviando...";waitlistSubmit.disabled=true;waitlistSubmit.textContent="Enviando...";
   if(!supabaseClient){waitlistStatus.textContent="Não foi possível carregar o Supabase.";waitlistSubmit.disabled=false;waitlistSubmit.textContent="Entrar na lista";return;}
-  const{error}=await supabaseClient.from("waitlist").insert([{nome,email,whatsapp,edicao}]);
-  if(error){waitlistStatus.textContent="Não foi possível enviar agora. Tente novamente.";waitlistSubmit.disabled=false;waitlistSubmit.textContent="Entrar na lista";return;}
+  const payload=itens.map(function(item){return{nome,email,whatsapp,edicao:item.edicao,quantidade:item.quantidade};});
+  const{error}=await supabaseClient.from("waitlist").insert(payload);
+  if(error){waitlistStatus.textContent=String(error.message||"").toLowerCase().includes("quantidade")?"Adicione a coluna quantidade no Supabase para liberar esse cadastro múltiplo.":"Não foi possível enviar agora. Tente novamente.";waitlistSubmit.disabled=false;waitlistSubmit.textContent="Entrar na lista";return;}
   waitlistStatus.textContent="Cadastro enviado com sucesso. Confira seu email.";waitlistSubmit.textContent="Enviado";setTimeout(fecharCadastro,1200);
 });
 </script>
